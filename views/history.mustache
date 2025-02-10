@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Histórico de Compras</title>
+</head>
+<body>
+  <h1>Meus Ingressos</h1>
+  <ul>
+    {{#purchases}}
+      <li>{{ticket.name}} - Quantidade: {{quantity}}</li>
+    {{/purchases}}
+  </ul>
+</body>
+</html>

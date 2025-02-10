@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ingressos Disponíveis</title>
+</head>
+<body>
+  <h1>Ingressos Disponíveis</h1>
+  <ul>
+    {{#tickets}}
+      <li>
+        <strong>{{name}}</strong> - R$ {{price}} ({{quantity}} disponíveis)
+        <!-- Exibe botões apenas para administradores -->
+        {{#userRole}}
+          {{#isAdmin}}
+            <a href="/ticket/admin/tickets/edit/{{_id}}">Editar</a>
+            <form action="/ticket/admin/tickets/delete/{{_id}}" method="POST" style="display:inline;">
+              <button type="submit">Excluir</button>
+            </form>
+          {{/isAdmin}}
+        {{/userRole}}
+      </li>
+    {{/tickets}}
+  </ul>
+  <a href="/history">Ver Histórico de Compras</a>
+</body>
+</html>
