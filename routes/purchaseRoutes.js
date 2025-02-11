@@ -1,40 +1,55 @@
 const express = require('express');
-const { authMiddleware } = require('../middleware/authMiddleware'); // Desestruture o middleware
+const { authMiddleware } = require('../middleware/authMiddleware');
 const Ticket = require('../models/ticket');
 const Purchase = require('../models/purchase');
 const router = express.Router();
 
-// Comprar ingressos
-router.post('/', authMiddleware, async (req, res) => {
+// Rota POST para exibir o resumo da compra
+router.post('/summary', authMiddleware, async (req, res) => {
   try {
-    const { purchases } = req.body; // Array de { ticketId, quantity }
-    const userId = req.user.id;
-    let totalPrice = 0;
-    const ticketsToBuy = [];
+    const { ticketId, quantity } = req.body;
+    const ticket = await Ticket.findById(ticketId);
+    if (!ticket || ticket.quantity < quantity) {
+      return res.status(400).send('Ingresso indisponível ou quantidade inválida.');
+    }
+    const totalPrice = ticket.price * quantity;
+    res.render('purchase-summary', { ticket, quantity, totalPrice });
+  } catch (error) {
+    res.status(500).send('Erro ao processar a compra.');
+  }
+});
 
-    for (const purchase of purchases) {
-      const ticket = await Ticket.findById(purchase.ticketId);
-      if (!ticket) {
-        return res.status(404).json({ message: 'Ingresso não encontrado' });
-      }
-      if (ticket.quantity < purchase.quantity) {
-        return res.status(400).json({ message: `Estoque insuficiente para ${ticket.name}` });
-      }
-      ticket.quantity -= purchase.quantity;
-      await ticket.save();
-      totalPrice += ticket.price * purchase.quantity;
-      ticketsToBuy.push({ ticket: ticket._id, quantity: purchase.quantity });
+// Rota POST para confirmar o pagamento
+router.post('/confirm', authMiddleware, async (req, res) => {
+  try {
+    const { ticketId, quantity } = req.body;
+    const userId = req.user.id;
+
+    // Encontra o ingresso
+    const ticket = await Ticket.findById(ticketId);
+    if (!ticket || ticket.quantity < quantity) {
+      return res.status(400).send('Ingresso indisponível ou quantidade inválida.');
     }
 
+    // Deduz a quantidade disponível
+    ticket.quantity -= quantity;
+    await ticket.save();
+
+    // Calcula o valor total
+    const totalPrice = ticket.price * quantity;
+
+    // Registra a compra
     const purchaseRecord = new Purchase({
       user: userId,
-      tickets: ticketsToBuy,
+      tickets: [{ ticket: ticketId, quantity }],
       totalPrice,
     });
     await purchaseRecord.save();
-    res.status(201).json({ message: 'Compra realizada com sucesso', purchase: purchaseRecord });
+
+    // Renderiza a tela de confirmação
+    res.render('purchase-confirmation', { ticket, quantity, totalPrice });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).send('Erro ao confirmar a compra.');
   }
 });
 

@@ -6,20 +6,39 @@
   <title>Ingressos Disponíveis</title>
 </head>
 <body>
+  <!-- Mensagem de Boas-Vindas -->
+  <p>Bem-vindo, {{username}}!</p>
+
+  <!-- Botão Sair -->
+  <a href="/auth/logout">Sair</a>
+
   <h1>Ingressos Disponíveis</h1>
+
+  <!-- Botão Adicionar Ticket (Apenas para Admins) -->
+  {{#isAdmin}}
+    <a href="/ticket/admin/tickets/new">Adicionar Novo Ingresso</a>
+  {{/isAdmin}}
+
   <ul>
     {{#tickets}}
       <li>
         <strong>{{name}}</strong> - R$ {{price}} ({{quantity}} disponíveis)
-        <!-- Exibe botões apenas para administradores -->
-        {{#userRole}}
-          {{#isAdmin}}
-            <a href="/ticket/admin/tickets/edit/{{_id}}">Editar</a>
-            <form action="/ticket/admin/tickets/delete/{{_id}}" method="POST" style="display:inline;">
-              <button type="submit">Excluir</button>
-            </form>
-          {{/isAdmin}}
-        {{/userRole}}
+        
+        <!-- Formulário de Compra -->
+        <form action="/purchase/summary" method="POST" style="display:inline;">
+          <input type="hidden" name="ticketId" value="{{_id}}" />
+          <label for="quantity">Quantidade:</label>
+          <input type="number" id="quantity" name="quantity" min="1" max="{{quantity}}" value="1" required />
+          <button type="submit">Comprar</button>
+        </form>
+
+        <!-- Botões de Administração (Apenas para Administradores) -->
+        {{#isAdmin}}
+          <a href="/ticket/admin/tickets/edit/{{_id}}">Editar</a>
+          <form action="/ticket/admin/tickets/delete/{{_id}}" method="POST" style="display:inline;">
+            <button type="submit">Excluir</button>
+          </form>
+        {{/isAdmin}}
       </li>
     {{/tickets}}
   </ul>

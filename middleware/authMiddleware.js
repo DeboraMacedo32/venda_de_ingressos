@@ -1,27 +1,31 @@
 const jwt = require('jsonwebtoken');
+const User = require('../models/user');
 
-// Middleware de autenticação
-const authMiddleware = (req, res, next) => {
-  const token = req.cookies.token;
+const authMiddleware = async (req, res, next) => {
+  const token = req.cookies.token; // Ou onde quer que você armazene o token
   if (!token) {
-    return res.status(401).json({ message: 'Acesso negado. Nenhum token fornecido.' });
+    return res.status(401).json({ error: 'Acesso negado. Token não fornecido.' });
   }
+
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET || 'secretkey');
-    req.user = decoded;
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const user = await User.findById(decoded.id);
+    if (!user) {
+      return res.status(401).json({ error: 'Usuário não encontrado.' });
+    }
+
+    req.user = user;
     next();
   } catch (error) {
-    res.status(400).json({ message: 'Token inválido.' });
+    res.status(401).json({ error: 'Token inválido.' });
   }
 };
 
-// Middleware de verificação de administrador
 const isAdmin = (req, res, next) => {
   if (req.user.role !== 'admin') {
-    return res.status(403).json({ message: 'Acesso negado. Somente administradores podem realizar esta ação.' });
+    return res.status(403).json({ error: 'Acesso restrito a administradores.' });
   }
   next();
 };
 
-// Exporta todos os middlewares como um objeto
 module.exports = { authMiddleware, isAdmin };

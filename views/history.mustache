@@ -6,11 +6,27 @@
   <title>Histórico de Compras</title>
 </head>
 <body>
-  <h1>Meus Ingressos</h1>
-  <ul>
-    {{#purchases}}
-      <li>{{ticket.name}} - Quantidade: {{quantity}}</li>
-    {{/purchases}}
-  </ul>
+  <!-- Mensagem de Boas-Vindas -->
+  <p>Bem-vindo, {{username}}!</p>
+
+  <h1>Histórico de Compras</h1>
+  {{#purchases}}
+    <div style="border: 1px solid #ccc; padding: 10px; margin-bottom: 10px;">
+      <p><strong>Data da Compra:</strong> {{createdAt}}</p>
+      <p><strong>Total Pago:</strong> R$ {{totalPrice}}</p>
+      <h3>Ingressos Comprados:</h3>
+      <ul>
+        {{#tickets}}
+          <li>
+            <strong>{{ticket.name}}</strong> - Quantidade: {{quantity}} - Preço Unitário: R$ {{ticket.price}}
+          </li>
+        {{/tickets}}
+      </ul>
+    </div>
+  {{/purchases}}
+  {{^purchases}}
+    <p>Você ainda não realizou nenhuma compra.</p>
+  {{/purchases}}
+  <a href="/ticket">Voltar para Ingressos</a>
 </body>
 </html>
