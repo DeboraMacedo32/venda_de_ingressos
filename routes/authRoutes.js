@@ -53,11 +53,10 @@ router.post('/register', async (req, res) => {
   }
 });
 
-// Rota GET para logout
 router.get('/logout', (req, res) => {
-  // Limpa o cookie contendo o token
-  res.clearCookie('token'); // Substitua 'token' pelo nome do cookie que você usa para armazenar o token
-  res.redirect('/login'); // Redireciona para a página de login
+  
+  res.clearCookie('token'); 
+  res.redirect('/login'); 
 });
 
 module.exports = router;

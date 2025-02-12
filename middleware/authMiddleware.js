@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 
 const authMiddleware = async (req, res, next) => {
-  const token = req.cookies.token; // Ou onde quer que você armazene o token
+  const token = req.cookies.token; 
   if (!token) {
     return res.status(401).json({ error: 'Acesso negado. Token não fornecido.' });
   }
