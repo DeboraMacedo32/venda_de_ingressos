@@ -4,15 +4,15 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ingressos Disponíveis</title>
-   <link rel="stylesheet" href="/css/ticket.css">
+  <link rel="stylesheet" href="/css/ticket.css"> <!-- Vincula o CSS -->
 </head>
 <body>
   <!-- Mensagem de Boas-Vindas -->
   <p>Bem-vindo, {{username}}!</p>
-
+  
   <!-- Botão Sair -->
   <a href="/auth/logout">Sair</a>
-
+  
   <h1>Ingressos Disponíveis</h1>
 
   <!-- Botão Adicionar Ticket (Apenas para Admins) -->
@@ -23,7 +23,8 @@
   <ul>
     {{#tickets}}
       <li>
-        <strong>{{name}}</strong> - R$ {{price}} ({{quantity}} disponíveis)
+        <strong>{{name}}</strong>
+        <p>R$ {{price}} ({{quantity}} disponíveis)</p>
         
         <!-- Formulário de Compra -->
         <form action="/purchase/summary" method="POST" style="display:inline;">
@@ -35,10 +36,12 @@
 
         <!-- Botões de Administração (Apenas para Administradores) -->
         {{#isAdmin}}
-          <a href="/ticket/admin/tickets/edit/{{_id}}">Editar</a>
-          <form action="/ticket/admin/tickets/delete/{{_id}}" method="POST" style="display:inline;">
-            <button type="submit">Excluir</button>
-          </form>
+          <div class="admin-actions">
+            <a href="/ticket/admin/tickets/edit/{{_id}}">Editar</a>
+            <form action="/ticket/admin/tickets/delete/{{_id}}" method="POST" style="display:inline;">
+              <button type="submit">Excluir</button>
+            </form>
+          </div>
         {{/isAdmin}}
       </li>
     {{/tickets}}

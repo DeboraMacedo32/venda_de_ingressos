@@ -1,85 +1,119 @@
+/* Estilização Geral */
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 20px;
-    background-color: #f9f9f9;
-  }
-  
-  h1 {
-    color: #333;
-    text-align: center;
-  }
-  
-  p {
-    font-size: 16px;
-    color: #555;
-  }
-  
-  a {
-    text-decoration: none;
-    color: #007bff;
-  }
-  
-  a:hover {
-    text-decoration: underline;
-  }
-  
-  /* Botões */
-  button,
-  input[type="submit"] {
-    background-color: #007bff;
-    color: white;
-    border: none;
-    padding: 8px 12px;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  button:hover,
-  input[type="submit"]:hover {
-    background-color: #0056b3;
-  }
-  
-  /* Lista de Ingressos */
-  ul {
-    list-style-type: none;
-    padding: 0;
-  }
-  
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 20px;
+  background-color: #f9f9f9;
+}
+
+p {
+  font-size: 16px;
+  color: #555;
+}
+
+a {
+  text-decoration: none;
+  color: #007bff;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+h1 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+/* Layout dos Cards */
+ul {
+  list-style-type: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px; /* Espaçamento entre os cards */
+  justify-content: center; /* Centraliza os cards */
+}
+
+li {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e0e0e0;
+  width: 100%;
+  max-width: 300px;
+  padding: 20px;
+  text-align: center;
+}
+
+li strong {
+  font-size: 18px;
+  color: #333;
+  display: block;
+  margin-bottom: 10px;
+}
+
+li p {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 15px;
+}
+
+/* Formulário de Compra */
+form {
+  margin-top: 15px;
+}
+
+label {
+  margin-right: 10px;
+  font-weight: bold;
+}
+
+input[type="number"] {
+  width: 60px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+/* Botões de Administração */
+.admin-actions {
+  margin-top: 15px;
+}
+
+.admin-actions a,
+.admin-actions button {
+  margin-right: 10px;
+  font-size: 14px;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
   li {
-    background-color: #fff;
-    margin-bottom: 10px;
-    padding: 15px;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    max-width: 100%; /* Cards ocupam toda a largura em telas pequenas */
   }
-  
-  li strong {
-    font-size: 18px;
-    color: #333;
-  }
-  
-  form {
-    margin-top: 10px;
-  }
-  
-  label {
-    margin-right: 10px;
-  }
-  
+
   input[type="number"] {
-    width: 60px;
-    padding: 5px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+    width: 50px;
   }
-  
-  /* Links de Administração */
-  .admin-actions {
-    margin-top: 10px;
+
+  button {
+    padding: 6px 10px;
+    font-size: 12px;
   }
-  
-  .admin-actions a,
-  .admin-actions button {
-    margin-right: 10px;
-  }
+}
