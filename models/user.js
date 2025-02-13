@@ -2,7 +2,6 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const validator = require('validator');
 
-// Validação de e-mail com validator
 const UserSchema = new mongoose.Schema({
   username: { type: String, required: true, unique: true },
   email: { 
@@ -11,7 +10,7 @@ const UserSchema = new mongoose.Schema({
     unique: true,
     validate: {
       validator: function(value) {
-        return validator.isEmail(value); // Usa a função isEmail do validator
+        return validator.isEmail(value); 
       },
       message: 'O e-mail fornecido não tem um formato válido'
     }
@@ -20,7 +19,6 @@ const UserSchema = new mongoose.Schema({
   role: { type: String, enum: ['user', 'admin'], default: 'user' }
 });
 
-// Hash da senha antes de salvar ou quando modificada
 UserSchema.pre('save', async function (next) {
   if (!this.isModified('password')) return next();
   try {
@@ -31,7 +29,6 @@ UserSchema.pre('save', async function (next) {
   }
 });
 
-// Método para verificar a senha
 UserSchema.methods.comparePassword = async function (password) {
   return await bcrypt.compare(password, this.password);
 };

@@ -4,18 +4,15 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ingressos Disponíveis</title>
-  <link rel="stylesheet" href="/css/ticket.css"> <!-- Vincula o CSS -->
+  <link rel="stylesheet" href="/css/ticket.css"> 
 </head>
 <body>
-  <!-- Mensagem de Boas-Vindas -->
   <p>Bem-vindo, {{username}}!</p>
   
-  <!-- Botão Sair -->
   <a href="/auth/logout">Sair</a>
   
   <h1>Ingressos Disponíveis</h1>
 
-  <!-- Botão Adicionar Ticket (Apenas para Admins) -->
   {{#isAdmin}}
     <a href="/ticket/admin/tickets/new">Adicionar Novo Ingresso</a>
   {{/isAdmin}}
@@ -34,7 +31,6 @@
           <button type="submit">Comprar</button>
         </form>
 
-        <!-- Botões de Administração (Apenas para Administradores) -->
         {{#isAdmin}}
           <div class="admin-actions">
             <a href="/ticket/admin/tickets/edit/{{_id}}">Editar</a>

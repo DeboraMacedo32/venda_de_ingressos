@@ -102,10 +102,9 @@ button:hover {
   font-size: 14px;
 }
 
-/* Responsividade */
 @media (max-width: 768px) {
   li {
-    max-width: 100%; /* Cards ocupam toda a largura em telas pequenas */
+    max-width: 100%; 
   }
 
   input[type="number"] {

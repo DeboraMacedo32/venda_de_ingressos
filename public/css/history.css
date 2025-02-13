@@ -67,7 +67,6 @@ body {
     text-decoration: underline;
   }
 
-  /* Responsividade */
   @media (max-width: 600px) {
     .purchase-item {
       padding: 10px;
