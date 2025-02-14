@@ -7,41 +7,49 @@
   <link rel="stylesheet" href="/css/ticket.css"> 
 </head>
 <body>
-  <p>Bem-vindo, {{username}}!</p>
+  <div class="navbar">
+     <div class='name'>
+    {{username}}
+  </div>
+    <a href="/auth/logout">Sair</a>
+  </div>
   
-  <a href="/auth/logout">Sair</a>
-  
+  <div class="section-title">
   <h1>Ingressos Disponíveis</h1>
-
+  <div>
   {{#isAdmin}}
-    <a href="/ticket/admin/tickets/new">Adicionar Novo Ingresso</a>
+    <a href="/ticket/admin/tickets/new">+ Adicionar Novo Ingresso</a>
   {{/isAdmin}}
+  <a href="/history" class="btn-secondary">Ver Histórico de Compras</a>
+  </div>
+  </div>
 
   <ul>
     {{#tickets}}
       <li>
-        <strong>{{name}}</strong>
-        <p>R$ {{price}} ({{quantity}} disponíveis)</p>
-        
-        <!-- Formulário de Compra -->
-        <form action="/purchase/summary" method="POST" style="display:inline;">
-          <input type="hidden" name="ticketId" value="{{_id}}" />
-          <label for="quantity">Quantidade:</label>
-          <input type="number" id="quantity" name="quantity" min="1" max="{{quantity}}" value="1" required />
-          <button type="submit">Comprar</button>
-        </form>
-
         {{#isAdmin}}
           <div class="admin-actions">
             <a href="/ticket/admin/tickets/edit/{{_id}}">Editar</a>
             <form action="/ticket/admin/tickets/delete/{{_id}}" method="POST" style="display:inline;">
-              <button type="submit">Excluir</button>
+              <button type="submit" class="button-removed">Excluir</button>
             </form>
           </div>
         {{/isAdmin}}
+        <strong>{{name}}</strong>
+        <p class="price">R$ {{price}}</p>
+        <p class="quantity">{{quantity}} disponíveis</p>
+        
+        <!-- Formulário de Compra -->
+        <form action="/purchase/summary" method="POST" style="display:inline;">
+          <input type="hidden" name="ticketId" value="{{_id}}" />
+          <div class="footer-card">
+          <input type="number" id="quantity" name="quantity" min="1" max="{{quantity}}" value="1" required />
+          <button type="submit">Comprar</button>
+          </div>
+        </form>
+
       </li>
     {{/tickets}}
   </ul>
-  <a href="/history">Ver Histórico de Compras</a>
 </body>
 </html>
