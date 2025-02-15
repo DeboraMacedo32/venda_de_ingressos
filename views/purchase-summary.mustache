@@ -4,23 +4,26 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Resumo da Compra</title>
+  <link rel="stylesheet" href="/css/purchase-summary.css">
 </head>
 <body>
-  <h1>Resumo da Compra</h1>
-  <p><strong>Ingresso:</strong> {{ticket.name}}</p>
-  <p><strong>Preço Unitário:</strong> R$ {{ticket.price}}</p>
-  <p><strong>Quantidade:</strong> {{quantity}}</p>
-  <p><strong>Valor Total:</strong> R$ {{totalPrice}}</p>
-
-  <!-- Mensagem de Confirmação -->
-  <p style="color: red;">Atenção: Após confirmar a compra, ela não poderá ser cancelada.</p>
-
-  <!-- Botões de Ação -->
-  <form action="/purchase/confirm" method="POST" style="display:inline;">
-    <input type="hidden" name="ticketId" value="{{ticket._id}}" />
-    <input type="hidden" name="quantity" value="{{quantity}}" />
-    <button type="submit">Concordo e Continuo</button>
-  </form>
-  <a href="/ticket">Cancelar</a>
+  <div class="container">
+    <h1>Resumo da Compra</h1>
+    <div class="summary">
+      <p><strong>Ingresso:</strong> {{ticket.name}}</p>
+      <p><strong>Preço Unitário:</strong> R$ {{ticket.price}}</p>
+      <p><strong>Quantidade:</strong> {{quantity}}</p>
+      <p><strong>Valor Total:</strong> R$ {{totalPrice}}</p>
+    </div>
+    <!-- Mensagem de Confirmação -->
+    <p class="attention">Atenção: Após confirmar a compra, ela não poderá ser cancelada.</p>
+    <!-- Botões de Ação -->
+    <form action="/purchase/confirm" method="POST" class="action-buttons">
+      <input type="hidden" name="ticketId" value="{{ticket._id}}" />
+      <input type="hidden" name="quantity" value="{{quantity}}" />
+      <button type="submit" class="confirm-button">Concordo e Continuo</button>
+    </form>
+    <a href="/ticket" class="cancel-link">Cancelar</a>
+  </div>
 </body>
 </html>
