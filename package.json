@@ -5,6 +5,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/DeboraMacedo32/venda_de_ingressos.git"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
