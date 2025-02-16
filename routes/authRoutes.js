@@ -29,9 +29,35 @@ router.get('/register', (req, res) => {
 
 router.post('/register', async (req, res) => {
   try {
-    const { username, email, password, role } = req.body;
+    const { username, email, password } = req.body;
 
     if (!username || !email || !password) {
+      return res.status(400).json({ error: 'Todos os campos são obrigatórios' });
+    }
+
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res.status(400).json({ error: 'E-mail já cadastrado' });
+    }
+
+    const user = new User({ username, email, password, role: 'user' });
+    await user.save();
+
+    if (req.accepts('html')) {
+      return res.redirect('/login');
+    }
+
+    res.status(201).json({ message: 'Usuário registrado com sucesso' });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+router.post('/admin/register', authMiddleware, isAdmin, async (req, res) => {
+  try {
+    const { username, email, password, role } = req.body;
+
+    if (!username || !email || !password || !role) {
       return res.status(400).json({ error: 'Todos os campos são obrigatórios' });
     }
 
@@ -43,20 +69,10 @@ router.post('/register', async (req, res) => {
     const user = new User({ username, email, password, role });
     await user.save();
 
-    if (req.accepts('html')) {
-      return res.redirect('/login'); 
-    }
-
     res.status(201).json({ message: 'Usuário registrado com sucesso' });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
-});
-
-router.get('/logout', (req, res) => {
-  
-  res.clearCookie('token'); 
-  res.redirect('/login'); 
 });
 
 module.exports = router;
